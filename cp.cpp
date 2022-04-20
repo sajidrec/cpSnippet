@@ -15,6 +15,22 @@ lld binpow(lld base, lld power)
         return res * res;
 }
 
+bool isPrime(lld num)
+{
+    if (num == 1)
+    {
+        return false;
+    }
+    for (lld i = 2; i * i <= num; i++)
+    {
+        if (num % i == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
