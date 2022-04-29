@@ -16,12 +16,6 @@ lld binpow(lld base, lld power)
 
     while (power)
     {
-        if (power == 1)
-        {
-            res *= base;
-            power = 0;
-            break;
-        }
         if (power % 2 == 0)
         {
             base *= base;
