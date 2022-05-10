@@ -4,6 +4,33 @@ using namespace std;
 
 typedef long long int lld;
 
+lld binpowModular(lld base, lld power, lld Mod)
+{
+    //** Time complexity O(log(n)) **//
+
+    // if power is odd then res = res*base and power--
+    // if power if even then base = base*base and power = power/2
+    // if power is zero then res will be the answer
+
+    lld res = 1;
+
+    while (power)
+    {
+        if (power % 2 == 0)
+        {
+            base = (base * base) % Mod;
+            power /= 2;
+        }
+        else
+        {
+            res = (res * base) % Mod;
+            power--;
+        }
+    }
+
+    return res;
+}
+
 lld binpow(lld base, lld power)
 {
     //** Time complexity O(log(n)) **//
