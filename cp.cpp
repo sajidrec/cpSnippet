@@ -76,6 +76,30 @@ bool isPrime(lld num)
     return true;
 }
 
+template <class T>
+lld binSearch(vector<T> &vec, lld left, lld right, T target)
+{
+    // to call binSearch<data type> (params);
+    // time complexity O(log(N))
+    if (left > right)
+    {
+        return -1;
+    }
+    lld mid = (left + right) / 2;
+    if (vec[mid] == target)
+    {
+        return mid;
+    }
+    else if (vec[mid] > target)
+    {
+        return binSearch(vec, left, mid - 1, target);
+    }
+    else
+    {
+        return binSearch(vec, mid + 1, right, target);
+    }
+}
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
