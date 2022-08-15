@@ -100,6 +100,23 @@ lld binSearch(vector<T> &vec, lld left, lld right, T target)
     }
 }
 
+// *** code for dfs
+// lld const maxNodes = 1e5;
+// vector<lld> graph[maxNodes + 1];
+// bool visited[maxNodes + 1];
+
+// void dfs(lld vertex)
+// {
+//     visited[vertex] = true;
+//     for (auto child : graph[vertex])
+//     {
+//         if (!visited[child])
+//         {
+//             dfs(child);
+//         }
+//     }
+// }
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
