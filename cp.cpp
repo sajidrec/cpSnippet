@@ -100,6 +100,32 @@ lld binSearch(vector<T> &vec, lld left, lld right, T target)
     }
 }
 
+vector<string> subsequenceGenerator(string &str)
+{
+    // time complexity O(2^n * n)
+    // including empty string there can be 2^n subsequences
+    vector<string> allSequences;
+    lld n = str.size();
+    for (lld i = 0; i < (2 << (n - 1)); i++)
+    {
+        string res = "";
+        lld trace = 0, temp;
+        temp = i;
+        while (temp)
+        {
+            if (temp & 1)
+            {
+                res.push_back(str[trace]);
+            }
+            trace++;
+            temp >>= 1;
+        }
+        allSequences.push_back(res);
+    }
+
+    return allSequences;
+}
+
 // *** code for dfs
 // lld const maxNodes = 1e5;
 // vector<lld> graph[maxNodes + 1];
