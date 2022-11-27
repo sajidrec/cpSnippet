@@ -126,22 +126,53 @@ vector<string> subsequenceGenerator(string &str)
     return allSequences;
 }
 
-// *** code for dfs
-// lld const maxNodes = 1e5;
-// vector<lld> graph[maxNodes + 1];
-// bool visited[maxNodes + 1];
+class Graph
+{
+public:
+    lld vertices = 0;
+    vector<lld> *g;
+    vector<bool> visitedG;
 
-// void dfs(lld vertex)
-// {
-//     visited[vertex] = true;
-//     for (auto child : graph[vertex])
-//     {
-//         if (!visited[child])
-//         {
-//             dfs(child);
-//         }
-//     }
-// }
+    Graph(lld vertices)
+    {
+        this->vertices = vertices;
+        visitedG.assign(vertices, false);
+        g = new vector<lld>[vertices + 1];
+        // new keyword used for creating space for the pointer
+    }
+
+    void addEdge(lld vertex, lld edge)
+    {
+        g[vertex].push_back(edge);
+        g[edge].push_back(vertex);
+    }
+
+    void display()
+    {
+        for (lld i = 1; i <= vertices; i++)
+        {
+            cout << i << " : ";
+            for (auto val : g[i])
+            {
+                cout << val << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    void dfs(lld vertex)
+    {
+        cout << vertex << " ";
+        visitedG[vertex] = true;
+        for (auto v : g[vertex])
+        {
+            if (!visitedG[v])
+            {
+                dfs(v);
+            }
+        }
+    }
+};
 
 int main(void)
 {
