@@ -174,12 +174,36 @@ public:
     }
 };
 
+// seive generate
+
+// const int seiveSize = 1000001;
+// bool seive[seiveSize]; // by default global array got false value
+// void seiveGenerate()
+// {
+//     seive[0] = true;
+//     seive[1] = true;
+//     for (int i = 2; i * i < seiveSize; i++)
+//     {
+//         if (seive[i])
+//         {
+//             continue;
+//         }
+//         for (int j = i * i; j < seiveSize; j += i)
+//         {
+//             seive[j] = true;
+//         }
+//     }
+// }
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+
+    // seiveGenerate();
+
 
     return 0;
 }
