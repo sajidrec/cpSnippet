@@ -195,6 +195,71 @@ public:
 //     }
 // }
 
+class BinTree
+{
+public:
+    BinTree *left, *right;
+    lld val;
+
+    BinTree()
+    {
+        left = nullptr;
+        right = nullptr;
+    }
+};
+void consTructBst(BinTree *root, BinTree *currentNode)
+{
+    if (currentNode->val <= root->val)
+    {
+        if (root->left)
+        {
+            consTructBst(root->left, currentNode);
+        }
+        else
+        {
+            root->left = currentNode;
+        }
+    }
+    else
+    {
+        if (root->right)
+        {
+            consTructBst(root->right, currentNode);
+        }
+        else
+        {
+            root->right = currentNode;
+        }
+    }
+}
+void preOrder(BinTree *node)
+{
+    if (node)
+    {
+        cout << " " << node->val;
+        preOrder(node->left);
+        preOrder(node->right);
+    }
+}
+void inOrder(BinTree *node)
+{
+    if (node)
+    {
+        inOrder(node->left);
+        cout << " " << node->val;
+        inOrder(node->right);
+    }
+}
+void postOrder(BinTree *node)
+{
+    if (node)
+    {
+        postOrder(node->left);
+        postOrder(node->right);
+        cout << " " << node->val;
+    }
+}
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
