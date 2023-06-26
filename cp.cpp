@@ -260,6 +260,58 @@ void postOrder(BinTree *node)
     }
 }
 
+// addition operation of strings
+string addNum(string str1, string str2)
+{
+    string ans = "";
+
+    lld pointA = str1.size() - 1;
+    lld pointB = str2.size() - 1;
+
+    lld carry = 0;
+
+    while (pointA >= 0 && pointB >= 0)
+    {
+        lld a = str1[pointA] - '0';
+        lld b = str2[pointB] - '0';
+
+        ans.push_back(((a + b + carry) % 10) + '0');
+
+        carry = floor((a + b + carry) / 10);
+
+        pointA--;
+        pointB--;
+    }
+
+    while (pointA >= 0)
+    {
+        ans.push_back((((str1[pointA] - '0') + carry) % 10) + '0');
+        carry = floor(((str1[pointA] - '0') + carry) / 10);
+        pointA--;
+    }
+
+    while (pointB >= 0)
+    {
+        ans.push_back((((str2[pointB] - '0') + carry) % 10) + '0');
+        carry = floor(((str2[pointB] - '0') + carry) / 10);
+        pointB--;
+    }
+
+    if (carry)
+    {
+        ans.push_back('1');
+    }
+
+    reverse(ans.begin(), ans.end());
+
+    if (ans[0] == '0')
+    {
+        return "0";
+    }
+
+    return ans;
+}
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
@@ -267,8 +319,8 @@ int main(void)
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
+    // seive[index] = false means it's prime and uncomment the function body and call
     // seiveGenerate();
-
 
     return 0;
 }
