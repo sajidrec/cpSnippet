@@ -312,6 +312,18 @@ string addNum(string str1, string str2)
     return ans;
 }
 
+bool isPalindrome(string str)
+{
+    for (lld i = 0; i < str.size(); i++)
+    {
+        if (str[i] != str[(str.size() - 1) - i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
