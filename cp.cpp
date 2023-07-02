@@ -314,7 +314,7 @@ string addNum(string str1, string str2)
 
 bool isPalindrome(string str)
 {
-    for (lld i = 0; i < str.size(); i++)
+    for (lld i = 0; i < (str.size() / 2); i++)
     {
         if (str[i] != str[(str.size() - 1) - i])
         {
@@ -322,6 +322,63 @@ bool isPalindrome(string str)
         }
     }
     return true;
+}
+
+string getBinary(lld num)
+{
+    string ans = "";
+    while (num)
+    {
+        if (num & 1)
+        {
+            ans.push_back('1');
+        }
+        else
+        {
+            ans.push_back('0');
+        }
+        num >>= 1;
+    }
+
+    // bellow logic will make sure that binary is 32bit
+    // while (ans.size() != 32)
+    // {
+    //     ans.push_back('0');
+    // }
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+lld getDecimal(string str)
+{
+    lld firstSetBitIndex = 0;
+
+    while (true)
+    {
+        if (str[firstSetBitIndex] == '1')
+        {
+            break;
+        }
+        firstSetBitIndex++;
+    }
+
+    reverse(str.begin() + firstSetBitIndex, str.begin() + str.size());
+
+    lld ans = 0, binTracker = 1;
+
+    for (; firstSetBitIndex < str.size(); firstSetBitIndex++)
+    {
+
+        if (str[firstSetBitIndex] == '1')
+        {
+            ans += binTracker;
+        }
+
+        binTracker <<= 1;
+    }
+
+    return ans;
 }
 
 int main(void)
