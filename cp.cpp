@@ -381,6 +381,42 @@ lld getDecimal(string str)
     return ans;
 }
 
+vector<lld> bfs(lld vertices, vector<vector<lld>> adj, lld startNode)
+{
+    bool visited[vertices + 1];
+
+    for (lld i = 0; i < (vertices + 1); i++)
+    {
+        visited[i] = false;
+    }
+
+    visited[startNode] = true; // <- change start vertex number
+
+    queue<lld> q;
+    q.push(startNode); // <- change start vertex number
+
+    vector<lld> ans;
+
+    while (!q.empty())
+    {
+        lld node = q.front();
+        q.pop();
+
+        ans.push_back(node);
+
+        for (auto it : adj[node])
+        {
+            if (!visited[it])
+            {
+                visited[it] = true;
+                q.push(it);
+            }
+        }
+    }
+
+    return ans;
+}
+
 int main(void)
 {
     // freopen("input.txt", "r", stdin);
