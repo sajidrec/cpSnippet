@@ -126,54 +126,6 @@ vector<string> subsequenceGenerator(string &str)
     return allSequences;
 }
 
-class Graph
-{
-public:
-    lld vertices = 0;
-    vector<lld> *g;
-    vector<bool> visitedG;
-
-    Graph(lld vertices)
-    {
-        this->vertices = vertices;
-        visitedG.assign(vertices, false);
-        g = new vector<lld>[vertices + 1];
-        // new keyword used for creating space for the pointer
-    }
-
-    void addEdge(lld vertex, lld edge)
-    {
-        g[vertex].push_back(edge);
-        g[edge].push_back(vertex);
-    }
-
-    void display()
-    {
-        for (lld i = 1; i <= vertices; i++)
-        {
-            cout << i << " : ";
-            for (auto val : g[i])
-            {
-                cout << val << " ";
-            }
-            cout << endl;
-        }
-    }
-
-    void dfs(lld vertex)
-    {
-        cout << vertex << " ";
-        visitedG[vertex] = true;
-        for (auto v : g[vertex])
-        {
-            if (!visitedG[v])
-            {
-                dfs(v);
-            }
-        }
-    }
-};
-
 // seive generate
 
 // const int seiveSize = 1000001;
@@ -259,7 +211,6 @@ void postOrder(BinTree *node)
         cout << " " << node->val;
     }
 }
-
 // addition operation of strings
 string addNum(string str1, string str2)
 {
@@ -311,7 +262,6 @@ string addNum(string str1, string str2)
 
     return ans;
 }
-
 bool isPalindrome(string str)
 {
     for (lld i = 0; i < (str.size() / 2); i++)
@@ -353,7 +303,6 @@ string getBinary(lld num)
 lld getDecimal(string str)
 {
     lld firstSetBitIndex = 0;
-
     while (true)
     {
         if (str[firstSetBitIndex] == '1')
@@ -362,11 +311,8 @@ lld getDecimal(string str)
         }
         firstSetBitIndex++;
     }
-
     reverse(str.begin() + firstSetBitIndex, str.begin() + str.size());
-
     lld ans = 0, binTracker = 1;
-
     for (; firstSetBitIndex < str.size(); firstSetBitIndex++)
     {
 
@@ -377,11 +323,10 @@ lld getDecimal(string str)
 
         binTracker <<= 1;
     }
-
     return ans;
 }
 
-vector<lld> bfs(lld vertices, vector<vector<lld>> adj, lld startNode)
+vector<lld> bfs(lld vertices, vector<vector<lld>> &adj, lld startNode)
 {
     bool visited[vertices + 1];
 
@@ -413,6 +358,33 @@ vector<lld> bfs(lld vertices, vector<vector<lld>> adj, lld startNode)
             }
         }
     }
+
+    return ans;
+}
+
+void dfsHelper(lld node, vector<vector<lld>> &adj, bool visited[], vector<lld> &ans)
+{
+    visited[node] = true;
+    ans.push_back(node);
+    for (auto it : adj[node])
+    {
+        if (!visited[it])
+        {
+            dfsHelper(it, adj, visited, ans);
+        }
+    }
+}
+vector<lld> dfs(lld vertices, vector<vector<lld>> &adj, lld startingIndex)
+{
+    vector<lld> ans;
+
+    bool visited[vertices + 1];
+    for (lld i = 0; i < (vertices + 1); i++)
+    {
+        visited[i] = false;
+    }
+
+    dfsHelper(startingIndex, adj, visited, ans);
 
     return ans;
 }
