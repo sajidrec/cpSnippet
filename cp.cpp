@@ -393,8 +393,8 @@ int main(void)
 {
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
-    // ios_base::sync_with_stdio(false);
-    // cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
     // seive[index] = false means it's prime and uncomment the function body and call
     // seiveGenerate();
