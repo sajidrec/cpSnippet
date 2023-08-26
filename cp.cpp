@@ -3,6 +3,7 @@
 using namespace std;
 
 typedef long long int lld;
+typedef string String;
 
 lld binpowModular(lld base, lld power, lld Mod)
 {
