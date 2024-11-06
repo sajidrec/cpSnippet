@@ -182,32 +182,6 @@ lld binSearch(vector<T> &vec, lld left, lld right, T target)
     }
 }
 
-vector<string> subsequenceGenerator(string &str)
-{
-    // time complexity O(2^n * n)
-    // including empty string there can be 2^n subsequences
-    vector<string> allSequences;
-    lld n = str.size();
-    for (lld i = 0; i < (2 << (n - 1)); i++)
-    {
-        string res = "";
-        lld trace = 0, temp;
-        temp = i;
-        while (temp)
-        {
-            if (temp & 1)
-            {
-                res.push_back(str[trace]);
-            }
-            trace++;
-            temp >>= 1;
-        }
-        allSequences.push_back(res);
-    }
-
-    return allSequences;
-}
-
 // seive generate
 
 // const int seiveSize = 1000001;
@@ -469,6 +443,39 @@ vector<lld> dfs(lld vertices, vector<vector<lld>> &adj, lld startingIndex)
     dfsHelper(startingIndex, adj, visited, ans);
 
     return ans;
+}
+
+lld lcs(String &strOne, String &strTwo)
+{
+    // longest commone subsequence
+    // Time complexity -> O(strOne.size()*strTwo.size())
+    // Space complexity -> O(strOne.size()+strTwo.size())
+
+    lld n = strOne.size();
+    lld m = strTwo.size();
+
+    vector<lld> prev(m + 1, 0), cur(m + 1, 0);
+
+    for (lld j = 0; j <= m; j++)
+    {
+        prev[j] = 0;
+    }
+    for (lld i = 1; i <= n; i++)
+    {
+        for (lld j = 1; j <= m; j++)
+        {
+            if (strOne[i - 1] == strTwo[j - 1])
+            {
+                cur[j] = 1 + prev[j - 1];
+            }
+            else
+            {
+                cur[j] = max(prev[j], cur[j - 1]);
+            }
+        }
+        prev = cur;
+    }
+    return prev[m];
 }
 
 int main(void)
