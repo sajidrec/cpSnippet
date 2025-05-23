@@ -80,70 +80,6 @@ lld binpow(lld base, lld power)
 //     }
 // }
 
-class BinTree
-{
-public:
-    BinTree *left, *right;
-    lld val;
-
-    BinTree()
-    {
-        left = nullptr;
-        right = nullptr;
-    }
-};
-void consTructBst(BinTree *root, BinTree *currentNode)
-{
-    if (currentNode->val <= root->val)
-    {
-        if (root->left)
-        {
-            consTructBst(root->left, currentNode);
-        }
-        else
-        {
-            root->left = currentNode;
-        }
-    }
-    else
-    {
-        if (root->right)
-        {
-            consTructBst(root->right, currentNode);
-        }
-        else
-        {
-            root->right = currentNode;
-        }
-    }
-}
-void preOrder(BinTree *node)
-{
-    if (node)
-    {
-        cout << " " << node->val;
-        preOrder(node->left);
-        preOrder(node->right);
-    }
-}
-void inOrder(BinTree *node)
-{
-    if (node)
-    {
-        inOrder(node->left);
-        cout << " " << node->val;
-        inOrder(node->right);
-    }
-}
-void postOrder(BinTree *node)
-{
-    if (node)
-    {
-        postOrder(node->left);
-        postOrder(node->right);
-        cout << " " << node->val;
-    }
-}
 // addition operation of strings
 string addNum(string str1, string str2)
 {
@@ -193,69 +129,6 @@ string addNum(string str1, string str2)
         return "0";
     }
 
-    return ans;
-}
-bool isPalindrome(string str)
-{
-    for (lld i = 0; i < (str.size() / 2); i++)
-    {
-        if (str[i] != str[(str.size() - 1) - i])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-string getBinary(lld num)
-{
-    string ans = "";
-    while (num)
-    {
-        if (num & 1)
-        {
-            ans.push_back('1');
-        }
-        else
-        {
-            ans.push_back('0');
-        }
-        num >>= 1;
-    }
-
-    // bellow logic will make sure that binary is 32bit
-    // while (ans.size() != 32)
-    // {
-    //     ans.push_back('0');
-    // }
-
-    reverse(ans.begin(), ans.end());
-    return ans;
-}
-
-lld getDecimal(string str)
-{
-    lld firstSetBitIndex = 0;
-    while (true)
-    {
-        if (str[firstSetBitIndex] == '1')
-        {
-            break;
-        }
-        firstSetBitIndex++;
-    }
-    reverse(str.begin() + firstSetBitIndex, str.begin() + str.size());
-    lld ans = 0, binTracker = 1;
-    for (; firstSetBitIndex < str.size(); firstSetBitIndex++)
-    {
-
-        if (str[firstSetBitIndex] == '1')
-        {
-            ans += binTracker;
-        }
-
-        binTracker <<= 1;
-    }
     return ans;
 }
 
@@ -353,6 +226,69 @@ lld lcs(String &strOne, String &strTwo)
         prev = cur;
     }
     return prev[m];
+}
+
+// 0 indexed segmentTree for finding and updating minimum value
+void buildSegmentTree(lld index, lld low, lld high, vector<lld> &vec, vector<lld> &segmentTree)
+{
+    if (low == high)
+    {
+        segmentTree[index] = vec[low];
+        return;
+    }
+
+    lld mid = (low + high) / 2;
+
+    buildSegmentTree((2 * index) + 1, low, mid, vec, segmentTree);
+    buildSegmentTree((2 * index) + 2, mid + 1, high, vec, segmentTree);
+
+    segmentTree[index] = min(segmentTree[(2 * index) + 1], segmentTree[(2 * index) + 2]);
+}
+
+lld querySegmentTree(lld index, lld low, lld high, lld &left, lld &right, vector<lld> &vec, vector<lld> &segmentTree)
+{
+    // no overlap
+    if (low > right || high < left)
+    {
+        return LLONG_MAX;
+    }
+    // complete overlap
+    else if (low >= left && high <= right)
+    {
+        return segmentTree[index];
+    }
+    // partial overlap
+    else
+    {
+        lld mid = (low + high) / 2;
+        lld leftQuery = querySegmentTree((2 * index) + 1, low, mid, left, right, vec, segmentTree);
+
+        lld rightQuery = querySegmentTree((2 * index) + 2, mid + 1, high, left, right, vec, segmentTree);
+
+        return min(leftQuery, rightQuery);
+    }
+}
+
+void updateSegmentTree(lld index, lld low, lld high, vector<lld> &vec, vector<lld> &segmentTree, lld &value, lld &updateIndex)
+{
+    if (low == high)
+    {
+        segmentTree[index] = value;
+        return;
+    }
+
+    lld mid = (low + high) / 2;
+
+    if (updateIndex <= mid)
+    {
+        updateSegmentTree((2 * index) + 1, low, mid, vec, segmentTree, value, updateIndex);
+    }
+    else
+    {
+        updateSegmentTree((2 * index) + 2, mid + 1, high, vec, segmentTree, value, updateIndex);
+    }
+
+    segmentTree[index] = min(segmentTree[(2 * index) + 1], segmentTree[(2 * index) + 2]);
 }
 
 int main(void)
